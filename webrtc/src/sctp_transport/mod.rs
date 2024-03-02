@@ -102,7 +102,7 @@ impl RTCSctpTransport {
             dtls_transport,
             state: AtomicU8::new(RTCSctpTransportState::Connecting as u8),
             is_started: AtomicBool::new(false),
-            max_message_size: RTCSctpTransport::calc_message_size(65536, 65536),
+            max_message_size: RTCSctpTransport::calc_message_size(1073741823, 1073741823),
             max_channels: SCTP_MAX_CHANNELS,
             sctp_association: Mutex::new(None),
             on_error_handler: Arc::new(ArcSwapOption::empty()),
@@ -156,7 +156,7 @@ impl RTCSctpTransport {
                     association = sctp::association::Association::client(sctp::association::Config {
                         net_conn: Arc::clone(net_conn) as Arc<dyn Conn + Send + Sync>,
                         max_receive_buffer_size: 0,
-                        max_message_size: 0,
+                        max_message_size: 1073741823,
                         name: String::new(),
                     }) => {
                         break Arc::new(association?);
